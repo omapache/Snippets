@@ -1129,69 +1129,7 @@
      ],
      "description": "updatear la migracion"
    },
-     "metodo Post": {
-     "prefix": "Post",
-     "body": [
-       "[HttpPost]",
-       "[ProducesResponseType(StatusCodes.Status201Created)]",
-       "[ProducesResponseType(StatusCodes.Status400BadRequest)]",
-       "",
-       "public async Task<ActionResult<$1>> Post($1 $2Dto)",
-       "{",
-       "var $2= this.mapper.Map<$4>($2Dto);",
-       "this.unitofwork.$3.Add($2);",
-       "await unitofwork.SaveAsync();",
-       "if($2 == null)",
-       "{",
-       "   return BadRequest();",
-       "}",
-       "$2Dto.Id = $2.Id;",
-       "return CreatedAtAction(nameof(Post), new {id =$2Dto.Id}, $2Dto);",
-       "}"
-     ],
-     "description": "metodo Put"
-     },
-     "metodo Put": {
-     "prefix": "Put",
-     "body": [
-       "[HttpPut(\"{id}\")]",
-       "[ProducesResponseType(StatusCodes.Status200OK)]",
-       "[ProducesResponseType(StatusCodes.Status400BadRequest)]",
-       "[ProducesResponseType(StatusCodes.Status404NotFound)]",
-       "",
-       "public async Task<ActionResult<$1>> Put(int id, [FromBody]$1 $2Dto){",
-       "   if($2Dto== null)",
-       "   {",
-       "       return NotFound();",
-       "   }",
-     "    var $2= this.mapper.Map<$3>($2Dto);",
-     "    unitofwork.$4.Update($2);",
-     "    await unitofwork.SaveAsync();",
-     "    return $2Dto;",
-       "}"
-     ],
-     "description": "metodo Put"
-     },
-     "metodo Delete": {
-     "prefix": "Delete",
-     "body": [
-       "[HttpDelete(\"{id}\")]",
-       "[ProducesResponseType(StatusCodes.Status204NoContent)]",
-       "[ProducesResponseType(StatusCodes.Status404NotFound)]",
-       "public async Task<IActionResult> Delete(int id){",
-       "   var $1= await unitofwork.$2.GetByIdAsync(id);",
-       "   if($1== null)",
-       "   {",
-       "      return NotFound();",
-       "   }",
-       "   unitofwork.$2.Remove($1);",
-       "   await unitofwork.SaveAsync();",
-       "   return NoContent();",
-       "}"
-     ],
-     "description": "metodo Delete"
-   },
-     "Configuracion configuracion en especifico": {
+     "Configuracion de controller en especifico": {
      "prefix": "ControllerEspecifico",
      "body": [
        ": BaseApiController",
@@ -1206,7 +1144,7 @@
        "    }",
      "}"
      ],
-     "description": "Configuracion configuracion en especifico"
+     "description": "Configuracion de UnitOfWork en especifico"
      },
    "ConfigureUnitOfWork": {
      "prefix": "UnitOfWork",
@@ -1240,5 +1178,116 @@
        ""
      ],
      "description": "ConfigureUnitOfWork"
-    }
+    },
+    "metodo Get": {
+      "prefix": "Get",
+      "body": [
+        "[HttpGet]",
+        "[ProducesResponseType(StatusCodes.Status200OK)]",
+        "[ProducesResponseType(StatusCodes.Status400BadRequest)]",
+        "public async Task<ActionResult<IEnumerable<${1:nameClass}>>> Get()",
+        "{",
+        "    var ${2:nameVar} = await unitofwork.${3:nameDbSetContext}.GetAllAsync();",
+        "    return mapper.Map<List<$1>>($2);",
+        "}"
+      ],
+      "description": "HttpGet Action with ProducesResponseType"
+      },
+      "metodo GetId": {
+      "prefix": "GetId",
+      "body": [
+        "[HttpGet(\"{id}\")]",
+        "[ProducesResponseType(StatusCodes.Status200OK)]",
+        "[ProducesResponseType(StatusCodes.Status400BadRequest)]",
+    
+        "public async Task<ActionResult<$1>> Get(int id)",
+        "{",
+        "    var ${2:nameVar} = await unitofwork.${3:nameDbSetContext}.GetByIdAsync(id);",
+        "    if ($2 == null){",
+        "       return NotFound();",
+        "    }",
+        "    return this.mapper.Map<$1>($2);",
+        "}"
+      ],
+      "description": "HttpGet Action with Route and ProducesResponseType"
+      },
+    "metodo Post": {
+      "prefix": "Post",
+      "body": [
+        "[HttpPost]",
+        "[ProducesResponseType(StatusCodes.Status201Created)]",
+        "[ProducesResponseType(StatusCodes.Status400BadRequest)]",
+        "",
+        "public async Task<ActionResult<$1>> Post($1 $2Dto)",
+        "{",
+        "var $2= this.mapper.Map<$4>($2Dto);",
+        "this.unitofwork.$3.Add($2);",
+        "await unitofwork.SaveAsync();",
+        "if($2 == null)",
+        "{",
+        "   return BadRequest();",
+        "}",
+        "$2Dto.Id = $2.Id;",
+        "return CreatedAtAction(nameof(Post), new {id =$2Dto.Id}, $2Dto);",
+        "}"
+      ],
+      "description": "metodo Put"
+      },
+      "metodo Put": {
+      "prefix": "Put",
+      "body": [
+        "[HttpPut(\"{id}\")]",
+        "[ProducesResponseType(StatusCodes.Status200OK)]",
+        "[ProducesResponseType(StatusCodes.Status400BadRequest)]",
+        "[ProducesResponseType(StatusCodes.Status404NotFound)]",
+        "",
+        "public async Task<ActionResult<$1>> Put(int id, [FromBody]$1 $2Dto){",
+        "   if($2Dto== null)",
+        "   {",
+        "       return NotFound();",
+        "   }",
+      "    var $2= this.mapper.Map<$3>($2Dto);",
+      "    unitofwork.$4.Update($2);",
+      "    await unitofwork.SaveAsync();",
+      "    return $2Dto;",
+        "}"
+      ],
+      "description": "metodo Put"
+      },
+      "metodo Delete": {
+      "prefix": "Delete",
+      "body": [
+        "[HttpDelete(\"{id}\")]",
+        "[ProducesResponseType(StatusCodes.Status204NoContent)]",
+        "[ProducesResponseType(StatusCodes.Status404NotFound)]",
+        "public async Task<IActionResult> Delete(int id){",
+        "   var $1= await unitofwork.$2.GetByIdAsync(id);",
+        "   if($1== null)",
+        "   {",
+        "      return NotFound();",
+        "   }",
+        "   unitofwork.$2.Remove($1);",
+        "   await unitofwork.SaveAsync();",
+        "   return NoContent();",
+        "}"
+      ],
+      "description": "metodo Delete"
+      },
+      "Configuracion configuracion en especifico": {
+      "prefix": "ControllerEspecifico",
+      "body": [
+        ": BaseApiController",
+        "{",
+        "    private readonly IUnitOfWork unitofwork;",
+        "    private readonly  IMapper mapper;",
+        "",
+        "    public $1Controller(IUnitOfWork unitofwork, IMapper mapper)",
+        "    {",
+        "        this.unitofwork = unitofwork;",
+        "        this.mapper = mapper;",
+        "    }",
+      "}"
+      ],
+      "description": "Configuracion configuracion en especifico"
+      }
  }
