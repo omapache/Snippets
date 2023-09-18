@@ -1129,7 +1129,7 @@
      ],
      "description": "updatear la migracion"
    },
-     "Configuracion de controller en especifico": {
+     "Configuracion configuracion en especifico": {
      "prefix": "ControllerEspecifico",
      "body": [
        ": BaseApiController",
@@ -1144,7 +1144,7 @@
        "    }",
      "}"
      ],
-     "description": "Configuracion de UnitOfWork en especifico"
+     "description": "Configuracion configuracion en especifico"
      },
    "ConfigureUnitOfWork": {
      "prefix": "UnitOfWork",
@@ -1272,22 +1272,5 @@
         "}"
       ],
       "description": "metodo Delete"
-      },
-      "Configuracion configuracion en especifico": {
-      "prefix": "ControllerEspecifico",
-      "body": [
-        ": BaseApiController",
-        "{",
-        "    private readonly IUnitOfWork unitofwork;",
-        "    private readonly  IMapper mapper;",
-        "",
-        "    public $1Controller(IUnitOfWork unitofwork, IMapper mapper)",
-        "    {",
-        "        this.unitofwork = unitofwork;",
-        "        this.mapper = mapper;",
-        "    }",
-      "}"
-      ],
-      "description": "Configuracion configuracion en especifico"
       }
  }
